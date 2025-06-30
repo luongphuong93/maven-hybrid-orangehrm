@@ -34,4 +34,10 @@ public class BaseTest {
         driver.manage().window().maximize();
         return driver;
     }
+
+    protected void closeBrowser(){
+        if(!(null == driver)){
+            driver.quit();
+        }
+    }
 }
