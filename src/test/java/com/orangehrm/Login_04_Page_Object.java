@@ -57,10 +57,6 @@ public class Login_04_Page_Object extends BaseTest {
         Assert.assertEquals(personalDetailPage.getEmployeeIDTextboxValue(),employeeID);
     }
 
-    @Test
-    public void Employee_02_EditEmployee(){
-
-    }
 
     @AfterClass
     public void afterClass(){
