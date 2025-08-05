@@ -7,18 +7,18 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-import pageFatory.*;
+import pageObjects.*;
 
-
-public class Login_05_Page_Factory extends BaseTest {
+public class Login_06_Page_Manager extends BaseTest {
     @Parameters({"browser","appUrl"})
     @BeforeClass
     public void beforeClass(String browserName, String appURL){
         driver = getBrowserDriver(browserName,appURL);
 
-        loginPage = new LoginPageObject(driver);
-        adminUsername = "luongphuong93";
-        adminPassword = "Simple1993@";
+        loginPage = PageGeneratorGeneric.getPage(LoginPageObject.class,driver);
+
+        adminUsername = "Admin";
+        adminPassword = "admin123";
         employeeFirstName = "Phuong";
         employeeLastName = "Luong";
     }
@@ -28,35 +28,35 @@ public class Login_05_Page_Factory extends BaseTest {
         // Action of Login Page
         loginPage.enterToUserNameTextbox(adminUsername);
         loginPage.enterToUserPasswordTextbox(adminPassword);
-        loginPage.clickToLoginButton();
+        dashboardPage = loginPage.clickToLoginButton();
 
         // Action of Dashboard Page
-        dashboardPage = new DashboardPageObject(driver);
-        Assert.assertTrue(dashboardPage.isLoadingSpinnerDisappear());
-        dashboardPage.clickToPIMModule();
+        Assert.assertTrue(dashboardPage.isLoadingSpinnerDisappear(driver));
+        dashboardPage.sleepInSecond(2);
+        employeeListPage = dashboardPage.clickToPIMModule();
 
         // Action of Employee List Page
-        employeeListPage = new EmployeeListPageObject(driver);
-        Assert.assertTrue(employeeListPage.isLoadingSpinnerDisappear());
-        employeeListPage.clickToAddEmployeeButton();
+        Assert.assertTrue(employeeListPage.isLoadingSpinnerDisappear(driver));
+        addEmployeePage = employeeListPage.clickToAddEmployeeButton();
 
         // Action of Add Employee Page
-        addEmployeePage = new AddEmployeePageObject(driver);
-        Assert.assertTrue(addEmployeePage.isLoadingSpinnerDisappear());
+        Assert.assertTrue(addEmployeePage.isLoadingSpinnerDisappear(driver));
         addEmployeePage.enterToFirstNameTextbox(employeeFirstName);
         addEmployeePage.enterToLastNameTextbox(employeeLastName);
         employeeID = addEmployeePage.getEmployeeID();
-        addEmployeePage.clickToSaveButton();
-        Assert.assertTrue(addEmployeePage.isLoadingSpinnerDisappear());
+        personalDetailPage = addEmployeePage.clickToSaveButton();
 
         // Action of Personal Detail Page
-        personalDetailPage = new PersonalDetailPageObject(driver);
-        Assert.assertTrue(personalDetailPage.isLoadingSpinnerDisappear());
+        Assert.assertTrue(personalDetailPage.isLoadingSpinnerDisappear(driver));
         Assert.assertEquals(personalDetailPage.getFirstNameTextboxValue(),employeeFirstName);
         Assert.assertEquals(personalDetailPage.getLastNameTextboxValue(),employeeLastName);
         Assert.assertEquals(personalDetailPage.getEmployeeIDTextboxValue(),employeeID);
     }
 
+    @Test
+    public void Employee_02_Contact_Detail(){
+        contactDetailPage = personalDetailPage.openContactDetailPage();
+    }
 
     @AfterClass
     public void afterClass(){
@@ -69,5 +69,6 @@ public class Login_05_Page_Factory extends BaseTest {
     private EmployeeListPageObject employeeListPage;
     private AddEmployeePageObject addEmployeePage;
     private PersonalDetailPageObject personalDetailPage;
+    private ContactDetailPageObject contactDetailPage;
     private String employeeID, adminUsername, adminPassword, employeeFirstName, employeeLastName;
 }
