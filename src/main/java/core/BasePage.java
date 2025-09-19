@@ -6,6 +6,9 @@ import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import pageObjects.PageGenerator;
+import pageObjects.openCart.admin.AdminLoginPO;
+import pageObjects.openCart.user.UserHomePO;
 import pageUIs.BasePageUI;
 
 import java.time.Duration;
@@ -76,6 +79,18 @@ public class BasePage {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public String getCurrentWindowID(WebDriver driver){
+        return driver.getWindowHandle();
+    }
+
+    public void openURLByNewTAB(WebDriver driver, String url){
+        driver.switchTo().newWindow(WindowType.TAB).get(url);
+    }
+
+    public void openURLByNewWindow(WebDriver driver, String url){
+        driver.switchTo().newWindow(WindowType.WINDOW).get(url);
     }
 
     public void switchToWindowByID(WebDriver driver, String parentID) {
@@ -285,6 +300,7 @@ public class BasePage {
 
     public void scrollToElementOnTop(WebDriver driver, String locator) {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", getWebElement(driver, locator));
+        sleepInSecond(1);
     }
 
     public void scrollToElementToDown(WebDriver driver, String locator) {
@@ -338,10 +354,46 @@ public class BasePage {
         return new WebDriverWait(driver,Duration.ofSeconds(LONG_TIMEOUT)).until(ExpectedConditions.elementToBeSelected(getByXpath(locator)));
     }
 
+    // OrangeHRM
     public boolean isLoadingSpinnerDisappear(WebDriver driver){
         return waitListElementInvisible(driver, BasePageUI.SPINNER_ICON);
     }
 
+    // OpenCart
+    public UserHomePO clickToLogoutLinkAtUserSite(WebDriver driver) {
+        waitElementClickable(driver,BasePageUI.USER_MY_ACCOUNT_HEADER);
+        clickToElement(driver,BasePageUI.USER_MY_ACCOUNT_HEADER);
+
+        waitElementClickable(driver,BasePageUI.USER_LOGOUT_LINK_ITEM);
+        clickToElement(driver,BasePageUI.USER_LOGOUT_LINK_ITEM);
+
+        return PageGenerator.getPage(UserHomePO.class,driver);
+    }
+
+    public AdminLoginPO clickToLogoutLinkAtAdminSite(WebDriver driver) {
+        waitElementClickable(driver,BasePageUI.ADMIN_LOGOUT_LINK_ITEM);
+        clickToElement(driver,BasePageUI.ADMIN_LOGOUT_LINK_ITEM);
+        return PageGenerator.getPage(AdminLoginPO.class,driver);
+    }
+
+    // Bởi vì khi mở trang admin site thì tuỳ thuộc vào tiền điều kiện trước đó sẽ mở ra các trang khác nhau nên hàm này để kiểu void,
+    // và khi trả về trang nào thì sẽ khởi tạo trang đó tại class test
+    // Ví dụ chưa login thì trả về trang login, còn nếu trước đó đã login rồi thì phải trả về trang Dashboard mới đúng
+    public void openAdminSite(WebDriver driver, String adminURL) {
+        openPageURL(driver, adminURL);
+    }
+
+    // Còn với trang user thì khi mở ra sẽ luôn là mở ra trang homepage nên trả về của hàm này để luôn là UserHomePO
+    public UserHomePO openUserSite(WebDriver driver, String userURL) {
+        openPageURL(driver, userURL);
+        return PageGenerator.getPage(UserHomePO.class,driver);
+    }
+
+    public UserHomePO openHomeLogo(WebDriver driver) {
+        waitElementClickable(driver, BasePageUI.USER_HOMEPAGE_LOGO);
+        clickToElement(driver,BasePageUI.USER_HOMEPAGE_LOGO);
+        return PageGenerator.getPage(UserHomePO.class,driver);
+    }
     private final int LONG_TIMEOUT = 30;
     private final int SHORT_TIMEOUT = 10;
 }
