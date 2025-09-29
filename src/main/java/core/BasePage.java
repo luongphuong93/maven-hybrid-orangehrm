@@ -187,12 +187,12 @@ public class BasePage {
         getWebElement(driver, castParemeter(locator,restValue)).click();
     }
 
-    public void sendKeyToElement(WebDriver driver, String locator, String valueToSend){
+    public void sendKeyToElement(WebDriver driver, String locator, CharSequence valueToSend){
         getWebElement(driver,locator).clear();
         getWebElement(driver,locator).sendKeys(valueToSend);
     }
 
-    public void sendKeyToElement(WebDriver driver, String locator, String valueToSend, String... restValue){
+    public void sendKeyToElement(WebDriver driver, String locator, CharSequence valueToSend, String... restValue){
         getWebElement(driver,castParemeter(locator,restValue)).clear();
         getWebElement(driver,castParemeter(locator,restValue)).sendKeys(valueToSend);
     }
