@@ -62,21 +62,46 @@ public class Level_11_By_Locator extends BaseTest {
     }
 
     @Test
-    public void Employee_02_Page_Navigator(){
+    public void Employee_02_Dynamic_Page(){
         // Personal Detail -> Contact Detail
-        contactDetailPage = personalDetailPage.openContactDetailPage();
+        contactDetailPage = (ContactDetailPageObject) personalDetailPage.openEditNavigatorPageByName("Contact Details");
 
         // Contact -> Job
-        jobPage = contactDetailPage.openJobPage();
+        jobPage = (JobPageObject) contactDetailPage.openEditNavigatorPageByName("Job");
 
         // Job -> Dependents
-        dependentsPage = jobPage.openDependentsPage();
+        dependentsPage = (DependentsPageObject) jobPage.openEditNavigatorPageByName("Dependents");
 
         // Dependents -> Personal
-        personalDetailPage = dependentsPage.openPersonalDetailPage();
+        personalDetailPage = (PersonalDetailPageObject) dependentsPage.openEditNavigatorPageByName("Personal Details");
 
         // Personal -> Job
-        jobPage = personalDetailPage.openJobPage();
+        jobPage = (JobPageObject) personalDetailPage.openEditNavigatorPageByName("Job");
+
+    }
+
+    @Test
+    public void Employee_03_Dynamic_Page(){
+        // Personal Detail -> Contact Detail
+        personalDetailPage.openEditNavigatorByName("Contact Details");
+        // Khởi tạo
+        contactDetailPage = PageGenerator.getPage(ContactDetailPageObject.class,driver);
+
+        // Contact -> Job
+        contactDetailPage.openEditNavigatorByName("Job");
+        jobPage = PageGenerator.getPage(JobPageObject.class,driver);
+        // Job -> Dependents
+        jobPage.openEditNavigatorByName("Dependents");
+        dependentsPage = PageGenerator.getPage(DependentsPageObject.class,driver);
+
+        // Dependents -> Personal
+        dependentsPage.openEditNavigatorByName("Personal Details");
+        personalDetailPage = PageGenerator.getPage(PersonalDetailPageObject.class,driver);
+
+        // Personal -> Job
+        personalDetailPage.openEditNavigatorByName("Job");
+        jobPage = PageGenerator.getPage(JobPageObject.class,driver);
+
     }
 
     @AfterClass

@@ -12,6 +12,7 @@ public class EditNavigatorPageObject extends BasePage {
         this.driver = driver;
     }
 
+    // Cách 1: viết 10 hàm cho 10 page
     public JobPageObject openJobPage(){
         waitElementClickable(driver, EditNavigatorPageUI.JOB_LINK);
         clickToElement(driver,EditNavigatorPageUI.JOB_LINK);
@@ -34,5 +35,30 @@ public class EditNavigatorPageObject extends BasePage {
         waitElementClickable(driver,EditNavigatorPageUI.CONTACT_DETAIL_LINK);
         clickToElement(driver,EditNavigatorPageUI.CONTACT_DETAIL_LINK);
         return PageGenerator.getPage(ContactDetailPageObject.class,driver);
+    }
+
+    // Cách 2: 1 hàm cho 10 page
+    public EditNavigatorPageObject openEditNavigatorPageByName(String pageName){
+        waitElementClickable(driver,EditNavigatorPageUI.DYNAMIC_LINK_BY_PAGE_NAME,pageName);
+        clickToElement(driver,EditNavigatorPageUI.DYNAMIC_LINK_BY_PAGE_NAME,pageName);
+
+        switch (pageName){
+            case "Personal Details":
+                return PageGenerator.getPage(PersonalDetailPageObject.class,driver);
+            case "Dependents":
+                return PageGenerator.getPage(DependentsPageObject.class,driver);
+            case "Contact Details":
+                return PageGenerator.getPage(ContactDetailPageObject.class,driver);
+            case "Job":
+                return PageGenerator.getPage(JobPageObject.class,driver);
+            default:
+                throw new IllegalArgumentException("Page name is not valid: " + pageName);
+        }
+    }
+
+    // Cách 3: 1 hàm cho 10 page, ko cần switch-case và return
+    public void openEditNavigatorByName(String pageName){
+        waitElementClickable(driver, EditNavigatorPageUI.DYNAMIC_LINK_BY_PAGE_NAME,pageName);
+        clickToElement(driver, EditNavigatorPageUI.DYNAMIC_LINK_BY_PAGE_NAME,pageName);
     }
 }
