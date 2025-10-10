@@ -18,7 +18,6 @@ import pageObjects.openCart.user.UserRegisterPO;
 
 public class Level_09_Switch_Url_Role extends BaseTest {
 
-
     @Parameters({"userUrl","adminUrl","browser"})
     @BeforeClass
     public void beforeClass(String userURL, String adminURL, String browserName){

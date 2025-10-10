@@ -13,6 +13,7 @@ import pageObjects.orangeHRM.editNavigation.ContactDetailPageObject;
 import pageObjects.orangeHRM.editNavigation.PersonalDetailPageObject;
 
 public class Level_06_Page_Manager extends BaseTest {
+
     @Parameters({"browser","appUrl"})
     @BeforeClass
     public void beforeClass(String browserName, String appURL){

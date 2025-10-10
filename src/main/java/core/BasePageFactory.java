@@ -10,51 +10,51 @@ import java.util.Set;
 
 public class BasePageFactory {
 
-    public void openPageURL(WebDriver driver, String pageUrl){
+    public void openPageURL(WebDriver driver, String pageUrl) {
         driver.get(pageUrl);
     }
 
-    public String getPageTitle(WebDriver driver){
+    public String getPageTitle(WebDriver driver) {
         return driver.getTitle();
     }
 
-    public String getPageURL(WebDriver driver){
+    public String getPageURL(WebDriver driver) {
         return driver.getCurrentUrl();
     }
 
-    public String getPageSource(WebDriver driver){
+    public String getPageSource(WebDriver driver) {
         return driver.getPageSource();
     }
 
-    public void backToPage(WebDriver driver, String pageUrl){
+    public void backToPage(WebDriver driver, String pageUrl) {
         driver.get(pageUrl);
     }
 
-    public void forwardToPage(WebDriver driver){
+    public void forwardToPage(WebDriver driver) {
         driver.navigate().forward();
     }
 
-    public void refreshPage(WebDriver driver){
+    public void refreshPage(WebDriver driver) {
         driver.navigate().refresh();
     }
 
-    private Alert waitToAlertPresence(WebDriver driver){
+    private Alert waitToAlertPresence(WebDriver driver) {
         return new WebDriverWait(driver, Duration.ofSeconds(LONG_TIMEOUT)).until(ExpectedConditions.alertIsPresent());
     }
 
-    public void acceptAlert(WebDriver driver){
+    public void acceptAlert(WebDriver driver) {
         waitToAlertPresence(driver).accept();
     }
 
-    public void cancelAlert(WebDriver driver){
+    public void cancelAlert(WebDriver driver) {
         waitToAlertPresence(driver).dismiss();
     }
 
-    public void sendkeyToAlert(WebDriver driver, String keyToSend){
+    public void sendkeyToAlert(WebDriver driver, String keyToSend) {
         waitToAlertPresence(driver).sendKeys(keyToSend);
     }
 
-    public String getAlertText(WebDriver driver){
+    public String getAlertText(WebDriver driver) {
         return waitToAlertPresence(driver).getText();
     }
 
@@ -114,57 +114,57 @@ public class BasePageFactory {
     // Thao tác với Element
     // PageFactory là define kiểu WebElement
 
-    public void clickToElement(WebElement element){
+    public void clickToElement(WebElement element) {
         element.click();
     }
 
-    public void sendKeyToElement(WebElement element, String valueToSend){
+    public void sendKeyToElement(WebElement element, String valueToSend) {
         element.clear();
         element.sendKeys(valueToSend);
     }
 
-    public String getElementText(WebElement element){
+    public String getElementText(WebElement element) {
         return element.getText();
     }
 
-    public String getElementDOMAttribute(WebElement element, String attributeName){
+    public String getElementDOMAttribute(WebElement element, String attributeName) {
         return element.getDomAttribute(attributeName);
     }
 
-    public String getElementDOMProperty(WebElement element, String propertyName){
+    public String getElementDOMProperty(WebElement element, String propertyName) {
         return element.getDomProperty(propertyName);
     }
 
-    public boolean isElementDisplay(WebElement element){
+    public boolean isElementDisplay(WebElement element) {
         return element.isDisplayed();
     }
 
-    public boolean isElementSelected(WebElement element){
+    public boolean isElementSelected(WebElement element) {
         return element.isSelected();
     }
 
-    public WebElement waitElementVisible(WebDriver driver, WebElement element){
-        return new WebDriverWait(driver,Duration.ofSeconds(LONG_TIMEOUT)).until(ExpectedConditions.visibilityOf(element));
+    public WebElement waitElementVisible(WebDriver driver, WebElement element) {
+        return new WebDriverWait(driver, Duration.ofSeconds(LONG_TIMEOUT)).until(ExpectedConditions.visibilityOf(element));
     }
 
-    public boolean waitElementSelected(WebDriver driver, WebElement element){
-        return new WebDriverWait(driver,Duration.ofSeconds(LONG_TIMEOUT)).until(ExpectedConditions.elementToBeSelected(element));
+    public boolean waitElementSelected(WebDriver driver, WebElement element) {
+        return new WebDriverWait(driver, Duration.ofSeconds(LONG_TIMEOUT)).until(ExpectedConditions.elementToBeSelected(element));
     }
 
-    public WebElement waitElementClickable(WebDriver driver, WebElement element){
-        return new WebDriverWait(driver,Duration.ofSeconds(LONG_TIMEOUT)).until(ExpectedConditions.elementToBeClickable(element));
+    public WebElement waitElementClickable(WebDriver driver, WebElement element) {
+        return new WebDriverWait(driver, Duration.ofSeconds(LONG_TIMEOUT)).until(ExpectedConditions.elementToBeClickable(element));
     }
 
-    public List<WebElement> waitListElementVisible(WebDriver driver, List<WebElement> elements){
+    public List<WebElement> waitListElementVisible(WebDriver driver, List<WebElement> elements) {
         return new WebDriverWait(driver, Duration.ofSeconds(LONG_TIMEOUT)).until(ExpectedConditions.visibilityOfAllElements(elements));
     }
 
-    public boolean waitElementInvisible(WebDriver driver, WebElement element){
-        return new WebDriverWait(driver,Duration.ofSeconds(LONG_TIMEOUT)).until(ExpectedConditions.invisibilityOf(element));
+    public boolean waitElementInvisible(WebDriver driver, WebElement element) {
+        return new WebDriverWait(driver, Duration.ofSeconds(LONG_TIMEOUT)).until(ExpectedConditions.invisibilityOf(element));
     }
 
-    public boolean waitListElementInvisible(WebDriver driver, List<WebElement> elements){
-        return new WebDriverWait(driver,Duration.ofSeconds(LONG_TIMEOUT)).until(ExpectedConditions.invisibilityOfAllElements(elements));
+    public boolean waitListElementInvisible(WebDriver driver, List<WebElement> elements) {
+        return new WebDriverWait(driver, Duration.ofSeconds(LONG_TIMEOUT)).until(ExpectedConditions.invisibilityOfAllElements(elements));
     }
 
     private final int LONG_TIMEOUT = 30;

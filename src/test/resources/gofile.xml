@@ -2,12 +2,12 @@
 
 <suite name="Upload File - UI Automation Test" verbose="1" >
 
-    <parameter name="appUrl" value="https://blueimp.github.io/jQuery-File-Upload/" />
+    <parameter name="appUrl" value="https://gofile.io/home" />
 
     <test name="Run on FIREFOX browser" >
-        <parameter name="browser" value="Chrome" />
+        <parameter name="browser" value="Firefox" />
         <classes>
-            <class name="com.jquery.Level_13_Upload_File" />
+            <class name="com.gofile.Level_13_Upload_File" />
         </classes>
     </test>
 

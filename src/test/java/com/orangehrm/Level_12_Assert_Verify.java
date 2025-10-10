@@ -8,11 +8,13 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pageObjects.PageGenerator;
-import pageObjects.orangeHRM.*;
-import pageObjects.orangeHRM.editNavigation.*;
+import pageObjects.orangeHRM.AddEmployeePageObject;
+import pageObjects.orangeHRM.DashboardPageObject;
+import pageObjects.orangeHRM.EmployeeListPageObject;
+import pageObjects.orangeHRM.LoginPageObject;
+import pageObjects.orangeHRM.editNavigation.PersonalDetailPageObject;
 
-public class Level_07_Switch_Page extends BaseTest {
-
+public class Level_12_Assert_Verify extends BaseTest {
     @Parameters({"browser","appUrl"})
     @BeforeClass
     public void beforeClass(String browserName, String appURL){
@@ -22,7 +24,7 @@ public class Level_07_Switch_Page extends BaseTest {
 
         adminUsername = "luongphuong93";
         adminPassword = "Simple1993@";
-        employeeFirstName = "employee4";
+        employeeFirstName = "employee5";
         employeeLastName = "Luong";
     }
 
@@ -34,48 +36,27 @@ public class Level_07_Switch_Page extends BaseTest {
         dashboardPage = loginPage.clickToLoginButton();
 
         // Action of Dashboard Page
-        Assert.assertTrue(dashboardPage.isLoadingSpinnerDisappear(driver));
+        verifyTrue(dashboardPage.isLoadingSpinnerDisappear(driver));
         dashboardPage.sleepInSecond(2);
         employeeListPage = dashboardPage.clickToPIMModule();
 
         // Action of Employee List Page
-        Assert.assertTrue(employeeListPage.isLoadingSpinnerDisappear(driver));
+        verifyTrue(employeeListPage.isLoadingSpinnerDisappear(driver));
         addEmployeePage = employeeListPage.clickToAddEmployeeButton();
 
         // Action of Add Employee Page
-        Assert.assertTrue(addEmployeePage.isLoadingSpinnerDisappear(driver));
+        verifyTrue(addEmployeePage.isLoadingSpinnerDisappear(driver));
         addEmployeePage.enterToFirstNameTextbox(employeeFirstName);
         addEmployeePage.enterToLastNameTextbox(employeeLastName);
         employeeID = addEmployeePage.getEmployeeID();
         personalDetailPage = addEmployeePage.clickToSaveButton();
 
         // Action of Personal Detail Page
-        Assert.assertTrue(personalDetailPage.isLoadingSpinnerDisappear(driver));
-        Assert.assertEquals(personalDetailPage.getFirstNameTextboxValue(),employeeFirstName);
-        Assert.assertEquals(personalDetailPage.getLastNameTextboxValue(),employeeLastName);
-        Assert.assertEquals(personalDetailPage.getEmployeeIDTextboxValue(),employeeID);
+        verifyTrue(personalDetailPage.isLoadingSpinnerDisappear(driver));
+        verifyEquals(personalDetailPage.getFirstNameTextboxValue(),employeeFirstName);
+        verifyEquals(personalDetailPage.getLastNameTextboxValue(),employeeLastName);
+        verifyEquals(personalDetailPage.getEmployeeIDTextboxValue(),employeeID);
     }
-
-    @Test
-    public void Employee_02_Switch_Page(){
-        /** Tạm thời comment đoạn này lại vì khi sang bài Login_08 thì dùng cách khác ko cần truyền driver
-        // Personal Detail -> Contact Detail
-        contactDetailPage = personalDetailPage.openContactDetailPage(driver);
-
-        // Contact -> Job
-        jobPage = contactDetailPage.openJobPage(driver);
-
-        // Job -> Dependents
-        dependentsPage = jobPage.openDependentsPage(driver);
-
-        // Dependents -> Personal
-        personalDetailPage = dependentsPage.openPersonalDetailPage(driver);
-
-        // Personal -> Job
-        jobPage = personalDetailPage.openJobPage(driver);
-         */
-    }
-
 
     @AfterClass
     public void afterClass(){
@@ -88,8 +69,5 @@ public class Level_07_Switch_Page extends BaseTest {
     private EmployeeListPageObject employeeListPage;
     private AddEmployeePageObject addEmployeePage;
     private PersonalDetailPageObject personalDetailPage;
-    private ContactDetailPageObject contactDetailPage;
-    private JobPageObject jobPage;
-    private DependentsPageObject dependentsPage;
     private String employeeID, adminUsername, adminPassword, employeeFirstName, employeeLastName;
 }

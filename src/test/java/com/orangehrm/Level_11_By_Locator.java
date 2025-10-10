@@ -18,6 +18,7 @@ import pageObjects.orangeHRM.editNavigation.JobPageObject;
 import pageObjects.orangeHRM.editNavigation.PersonalDetailPageObject;
 
 public class Level_11_By_Locator extends BaseTest {
+
     @Parameters({"browser","appUrl"})
     @BeforeClass
     public void beforeClass(String browserName, String appURL){

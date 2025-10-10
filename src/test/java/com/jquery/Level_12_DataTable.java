@@ -11,6 +11,8 @@ import pageObjects.PageGenerator;
 import pageObjects.jquery.HomePageObject;
 import pageUIs.jquery.HomePageUI;
 
+import java.util.List;
+
 public class Level_12_DataTable extends BaseTest {
     @Parameters({"browser","appUrl"})
     @BeforeClass
@@ -34,7 +36,7 @@ public class Level_12_DataTable extends BaseTest {
         Assert.assertTrue(homePage.isPageActiveByNumber("24"));
     }
 
-    @Test
+    @Test(enabled = false)
     public void Table_02_Search(){
         // 2 - search ở bất kỳ 1 header textbox nào dựa vào tên cột
         homePage.enterToHeaderTextBoxByName("Country","Afghanistan");
@@ -44,18 +46,56 @@ public class Level_12_DataTable extends BaseTest {
         homePage.refreshPage(driver);
 
 
-//        homePage.enterToHeaderTextBoxByName("Females","384187");
-//        homePage.refreshPage(driver);
-//        homePage.sleepInSecond(3);
-//
-//        homePage.enterToHeaderTextBoxByName("Males","803");
-//        homePage.refreshPage(driver);
-//        homePage.sleepInSecond(3);
-
-
         // 4- có thể xoá/edit bất kỳ 1 country nào dựa vào tên country
     }
 
+    @Test(enabled = false)
+    public void Table_03_Action(){
+        // 2 - search ở bất kỳ 1 header textbox nào dựa vào tên cột
+        homePage.enterToHeaderTextBoxByName("Country","Afghanistan");
+        homePage.sleepInSecond(3);
+
+        // 4- có thể xoá/edit bất kỳ 1 country nào dựa vào tên country
+        homePage.clickToActionByCountryName("Afghanistan","remove");
+        homePage.refreshPage(driver);
+
+        homePage.enterToHeaderTextBoxByName("Country","Angola");
+        homePage.sleepInSecond(3);
+        homePage.clickToActionByCountryName("Angola","edit");
+
+    }
+
+    @Test(enabled = false)
+    public void Table_04_Index(){
+        homePage.openPageURL(driver,"https://www.jqueryscript.net/demo/jQuery-Dynamic-Data-Grid-Plugin-appendGrid/");
+
+        homePage.clickLoadDataButton();
+
+        homePage.enterToTextboxByColumnNameAndRowIndex("Company","3","Vietnam");
+        homePage.enterToTextboxByColumnNameAndRowIndex("Contact Person","3","Phuong");
+        homePage.enterToTextboxByColumnNameAndRowIndex("Order Placed","3","15");
+        homePage.selectToDropdownByColumnNameAndRowIndex("Country","3","Hong Kong");
+        homePage.checkToCheckboxByColumnNameAndRowIndex("NPO?","3");
+        homePage.actionToRowByRowIndex("3","Move Up");
+        homePage.sleepInSecond(3);
+
+        homePage.enterToTextboxByColumnNameAndRowIndex("Company","4","Thailan");
+        homePage.enterToTextboxByColumnNameAndRowIndex("Contact Person","4","Jon Jandai");
+        homePage.enterToTextboxByColumnNameAndRowIndex("Order Placed","4","10");
+        homePage.selectToDropdownByColumnNameAndRowIndex("Country","4","Japan");
+        homePage.checkToCheckboxByColumnNameAndRowIndex("NPO?","4");
+        homePage.actionToRowByRowIndex("4","Insert");
+        homePage.sleepInSecond(3);
+    }
+
+    @Test
+    public void Table_05_Get_All_Page(){
+        List<String> columnActualValue = homePage.getColumnAllValueByColumnName("Country");
+        System.out.println(columnActualValue.size());
+
+        columnActualValue = homePage.getColumnAllValueByColumnName("Females");
+        System.out.println(columnActualValue.size());
+    }
 
     @AfterClass
     public void afterClass(){

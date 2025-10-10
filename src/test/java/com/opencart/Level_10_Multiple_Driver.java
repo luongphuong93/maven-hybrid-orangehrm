@@ -18,7 +18,6 @@ import pageObjects.openCart.user.UserRegisterPO;
 
 public class Level_10_Multiple_Driver extends BaseTest {
 
-
     @Parameters({"userUrl","adminUrl","browser"})
     @BeforeClass
     public void beforeClass(String userURL, String adminURL, String browserName){
